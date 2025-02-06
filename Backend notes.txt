@@ -1,0 +1,771 @@
+Day 2
+-learn npm init
+-understand package.json
+
+terminal commands:-
+pwd= prsent working directory
+mkd= make directory
+
+==package.json==:ensure a list of packages with thier version.
+
+==package-lock.json==:ensure the detailed of every package installed with version,sub dependencies,store detailed etc.
+
+==Both files work together to ensure smooth development for you and your team like we should also keep in mind that everyone in the team will work on same "version"==
+
+important! in js:-
+1>Way of writing function in js(arrow function,const function etc..)
+2>Callback use
+3>objects
+
+CallBack functions:
+-Let's understand First the Function, Like Different ways to write a functions(ok)
+-Then callback Functions 
+-It's like a function calling different Functions
+
+*call the callback function when the main work is over*
+
+#core Modules of NodeJs:
+-There are many built-in modules in NodeJs that  we can use
+-https://nodejs.org/api/
+
+#Learn about the 'fs' module
+-It creates file and writes the message inside
+
+#Learn about the 'os' module
+-learn OS.userInfo()
+-log username
+
+// // // function add(a,b){
+// // //     return a+b;
+// // // }
+// // // var add = function(a,b){
+// // //     return a + b;
+// // // }
+
+// // //arrow function:-
+// // // var add=(a,b)=>{
+// // //     return a+b;
+// // // }
+
+// // var add = (a,b)=>a+b;
+// // var result = add(49,3)+add(6,7);
+// // console.log(result);
+
+// // (function(){
+// //     console.log('learning backend from hello world!');
+// // })();
+
+
+// // //Callback function is also a function :- 
+// // function callback(){//callback function
+// //     console.log('Now adding is successful complete');
+// // }
+
+// //main function call callback function
+// const add = function (a,b,result_calbk){
+//     var result=a+b;
+//     console.log('Result : '+result);
+//     result_calbk();
+// }
+// // add(6,4,function(){
+// //     console.log('Adding completed!');
+// // });
+// //or
+// add(6,7,()=>console.log('Adding completed!'));
+
+var os = require('os');
+var fs = require('fs');
+// var user = os.userInfo();
+// console.log(user.username);
+ 
+fs.appendFile('textFile.txt',"Hi! my name Pratik Kumar\n",()=>console.log("file1 is created!"))
+console.log(fs);
+
+
+
+#lodash_library
+- widely used library..
+- having functionality to play with data like if we have the data array which contain same kind of elements and we haave to separate them we can use the lodash library functions to separte unique elemnets very quickly. 
+ex:-var data = ['Person','Person',1,2,1,2,'name','age','2'];
+var filter = _.uniq(data);
+console.log(filter);
+
+
+DAY-3
+
+# Server in Node.js
+=> Server : A server is a Person who communicates with clients(malik/client/customer).
+=> Analogy->server = waiter
+=> Analogy->database = chef
+
+# A server is a computer program that's responsible for preparing and delivering data to other computers
+# Web pages, images, videos, or any additional information
+
+
+client-->(GET/POST/PUT/DELETE)-->Server(Rest API)-->databse;
+client<--(JSON)<--Server(Rest API)<--databse;
+
+# JSON  formate: ( Khana saja ke dena )Analogy waiter(server) client(jo khane aaya/jo data maanga) sjake data dega.
+
+JSON : JavaScript Object Notation
+
+-Imagine you're sending a message to your friend, and you want to include information like your name, age, and a list of your favorite hobbies.
+-You cannot just send the message as is,
+-You need to organize the information in a way
+-JSON is a bit like this organized format for exchanging data between computers.
+
+-JSON is a lightweight
+-Structured and organised Data because
+-in most contexts, JSON is represented as a string
+ex- {
+    "name" : "Alice",
+    "age" : 25,
+    "Hobbbies" : [reading,painting,hiking]
+}
+
+# Inter Conversion JSON to an Object in Node.js :
+ 
+const jsonString = '{"name":"john","age": 30, "city": "New York"}';
+const jsonObject = JSON.parse(jsonString);//convert JSON string to object 
+console.log(jsonObject.name);//Output: John
+
+--------------------------------------------------------------------------------
+
+const objectToConvert = { name : "Alice", age:25 };
+const jsonStringified = JSON.stringify(objectToConvert); // convert object to JSON string/json is a string...
+console.log(jsonStringified);//Output: {"name":"Alice","age":25}
+
+{
+    //server.js code before day3
+        // const notes = require('./node.js');
+        // var _ = require('lodash');//here "_"can be anything like lodash etc....
+
+        // const { json } = require("express");
+
+        // var data = ['Person','Person',1,2,1,2,'name','age','2'];
+        // var filter = _.uniq(data);
+        // console.log(filter);
+
+        // console.log(notes.age,notes.addNumber(2+notes.age,3));
+        const jsonString = '{"name":"john","age": 30, "city": "New York"}';
+        const jsonObject = JSON.parse(jsonString);//convert JSON string to object 
+        console.log(jsonObject);//Output: John
+
+        const objectToString = JSON.stringify(jsonObject);//string type
+        console.log(objectToString);
+
+
+
+}
+
+#we are learning the nodejs with Express;
+
+METHODS to share data : 
+-Now, in the world of web development, we need to deal with data.
+-How data is sent and recieved between a client(like a web browser)and a server(built with Node.js)
+
+Different kinds of methods : 
+1>GET
+2>POST
+3>PATCH
+4>DELETE
+
+#GET method : 
+=Imagine you want to read a book on a library shelf.
+=You donot change anything (like write or update only read the data..)
+=You just want to get the information
+
+{
+    //code of lecture 5 : 
+        const express = require('express')//require of express
+        const app = express()//app is name.. u can say aakash=app
+
+        //menu of waiter
+        app.get('/', function (req, res) {
+        res.send('How can i help you sir..')
+        })
+        app.get('/indian',(req,res)=>{
+            var food = {
+                'item4': "rice",
+                'item2' : "rajma chawal",
+                is_Dosa : false,
+                is_daal : true
+            }
+            res.send(food);
+        })
+
+        app.listen(4000,()=>{
+            console.log("Listening on port number 5000")
+        })//server at address of localhost 4000
+}
+
+Day 4: lecture-6;
+
+# Database and postman:
+
+=>Web development = client(Customer) + server(waiter) + database(chef)
+->Ultimately, let's suppose we are going to open 
+Restuarent and there is lot of data around it;
+    -Number of chef
+    -Person's Details(like chef, owner, manager, waiter){
+        name
+        age
+        work
+        mobile number
+        email
+        address
+        salary
+    }
+    -Menu Details(like drinks, snacks, main course){
+        Name of dish
+        price
+        taste(like sweat, sour, spicy)
+        is_drink(boolean true,false)
+        Ingredients(array of data-["wheat","rice","sugar"])
+        Number of sales(like 78)
+    }
+
+=>This is all Data we must have to store to run a fully functional resturent 
+=> so we have to deal with data
+
+=>Now There are lots of Database out there in the Market, we can use according to our need
++SQL
++PostreSQL
++MongoDB(Now we use this as a db)
++MariaDB
++Oracle
+
+#Databases typically have their own server systems to manage and provide
+#These database server systems are seprate from Node.js servers but work together to create dynamic and data-driven web applications
+
+
+@ Node.js Server and Databases Server : 
+{
+    +> A database server is a specialized computer program or system that manages databases. It stores, retrieves, and manages data efficiently. 
+
+    +> The database server stores your application's data. When your Node.js server needs data, it sends requests to the database server, which then retrieves and sends the requested data back to the Node.js server. 
+
+    +> Node.js server is responsible for handling HTTP requests from clients (like web browsers) and returning responses.
+
+    +> It processes these requests, communicates with the database server, and sends data to clients.
+}
+
+Note : As we are creating the backend server does we need create it also : NO
+
+
+To start the Sql: We should install mongoDB+mongoSh
+#learn from = w3shool+sqlbil.com
+
+
+#1create a Database:
+->In SQL :-
+"CREATE DATABASE mydb;"
+->In MongoDB:-
+"use mydb"
+
+#2Create a Table(Collection in MongoDB):
+->In SQL:-
+"Create TABLE users {
+    id INT PRIMARY KEY,
+    username VARCHAR(50),
+    age INT
+};"
+->In MongoDB :-
+"db.createCollection("users");"
+
+#3Insert Data :
+->In SQL: -
+"INSERT INTO users(id, username, age)
+VALUES(1,'Alice',25);"
+
+->In MongoDB:-
+"db.users.insertOne({id:1,username :'Alice', age:25});"
+
+#4 Query Data : 
+->In SQL : -
+"SELECT* FROM users WHERE age>21;"
+->In MongoDB :-
+"db.users.find({age : {$gt :21}});"
+
+example : {
+        users> db.users.find({ age : { $gt  :21}});
+        [
+        {
+            _id: ObjectId('6783926c6ffbb28835cb0ce2'),
+            id: 1,
+            username: 'Alice',
+            age: 25
+        },
+        {
+            _id: ObjectId('678393f66ffbb28835cb0ce3'),
+            id: 1,
+            username: 'Alice',
+            age: 26
+        },
+        {
+            _id: ObjectId('678393ff6ffbb28835cb0ce4'),
+            id: 1,
+            username: 'Alice',
+            age: 23
+        }
+        ]
+}
+
+#how to see the objects of data of a collection name Pratik:{
+    
+users> show collections
+Pratik
+users> db.Pratik.find()
+[
+  {
+    _id: ObjectId('6783926c6ffbb28835cb0ce2'),
+    id: 1,
+    username: 'Alice',
+    age: 25
+  },
+  {
+    _id: ObjectId('678393f66ffbb28835cb0ce3'),
+    id: 1,
+    username: 'Alice',
+    age: 26
+  },
+  {
+    _id: ObjectId('678393ff6ffbb28835cb0ce4'),
+    id: 1,
+    username: 'Alice',
+    age: 23
+  },
+  {
+    _id: ObjectId('678394076ffbb28835cb0ce5'),
+    id: 1,
+    username: 'Alice',
+    age: 20
+  },
+  {
+    _id: ObjectId('678394666ffbb28835cb0ce6'),
+    id: 1,
+    username: 'Pratik',
+    age: 19
+  }
+]
+}
+
+#5 Update Data  :
+->In SQL :-
+"UPDATE users SET age = 22 WHERE username = 'Alice';"
+
+->In MongoDB :-
+"db.users.updateOne({username:'Alice'},{$set : {age  : 22}})"
+
+example {  
+users> db.Pratik.updateOne({ username:'Pratik'},{ $set: {age:20}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+users> db.Pratik.find()
+[
+  {
+    _id: ObjectId('6783926c6ffbb28835cb0ce2'),
+    id: 1,
+    username: 'Alice',
+    age: 25
+  },
+  {
+    _id: ObjectId('678393f66ffbb28835cb0ce3'),
+    id: 1,
+    username: 'Alice',
+    age: 26
+  },
+  {
+    _id: ObjectId('678393ff6ffbb28835cb0ce4'),
+    id: 1,
+    username: 'Alice',
+    age: 23
+  },
+  {
+    _id: ObjectId('678394076ffbb28835cb0ce5'),
+    id: 1,
+    username: 'Alice',
+    age: 20
+  },
+  {
+    _id: ObjectId('678394666ffbb28835cb0ce6'),
+    id: 2,
+    username: 'Pratik',
+    age: 20
+  }
+] 
+}
+
+#6 Delete Data :
+
+->In SQL : -
+"DELETE FROM users WHERE id = 1;"
+
+->MongoDB : -
+"db.users.deleteOne({id : 1});"
+
+
+#Connect MongoDB with NodeJS  : 
+
+{
+    @ Now, To  connect MongoDB with NodeJS we need a MongoDB driver(a set of programs)
+    @ A MongoDB driver is essential when connecting Node.js with MongoDB because it act as a bridge between your Node.js application and the mongoDB database.
+    @ MongoDB speaks its own language (protocol) to interact with the database server.
+    @ Node.js communicates in JavaScript.
+    @ The driver translate the JavaScript code from Node.js into a format that MongoDB can understand and vice versa.
+    @ The driver provides a set of functions and methods that make it easier to perform common database operations from Node.js code
+    @ The driver helps you handle errors that might occurs during database interactions. It provides error code,descriptions, and other details to help you troubleshoot issues.
+    @ The most popular driver is the "official mongoDB Node.js driver", also known as the mongoDB package.
+}
+$ npm install mongodb
+OR
+# Mongoose : 
+@ Now but we are going to use Mongoose, rather than "Mongodb"
+@ Mongoose is an "Object Data Modeling(ODM)" library for MongoDB and Node.js
+@ There are lots of reasons we prefer Mongoose rather than a native official driver
+@ Things are a lot eaiser here
+
++>jo chahiye wo hm  bhej dete h jaise hme email chahiye wo hi bs aayega by user ye nhi hoga kl se wo jute ka size bhej dega...
++> also check that data is correctly entered so that can be inserted in database correct data so that our databse is not become damage
++>code seen messy if we donot use it..
+
+
+Note : In a nutshell, using Mongoose makes working with MongoDB in Node.js much simpler and smoother. It gives you tools that handle complexities for you can focus on building your application without getting bogged down in technical details.
+
+
+#Day 5
+{
+  @ DATABASE CONNECTION
+  ->Connect MongoDB with NodeJS.
+  ->CREATE A FILE db.js IN THE ROOT FOLDER.
+  ->The db.js file you have created is essentially responsible for establishing a connection between your Node.js application and your MongoDB Database using Mongoose library.
+  ->In the last lecture, we saw that the mongoose is responsible for connection
+  ->So let's import Mongoose library.
+code: 
+[const express = require('express');
+const app = express();//app as functionality of express
+const db =require('./db');
+
+const Person = require('./models/Person');
+
+//It is middleware library for express.js
+//bodyParser.json() automatically parses the JSON
+//  data from the request body and convert it into
+//  a javaScript object, whic is then stored in 
+// the req.body
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());//req.body me store kr lega
+
+//POST route to add a person
+app.post('/person',(req,res)=>{
+    // const data = req.body;//Assuming the request body contains the Person data
+    
+    // //create a new Person document using the Mongoose model:
+    // const newPerson = new Person(data);
+    // // newPerson.name = data.name;or directly add data as a argument inside function 
+
+    // //Save the new person to the database
+    // // newPerson.save((error,person)=>{
+    // //     if(error){
+    // //         console.log('Error in storing Person in db',error);
+    // //         res.status(500).json({error: 'Internal server error'})
+    // //     }
+    // //     else{
+    // //         console.log("Data saved successfully");
+    // //         res.status(200).json(person);
+    // //     }
+    // // })//No one uses callback nowadays it is depriciated it look quite complex it executes when main function executed...
+    // //so we use async await: for save the new person to the database
+
+
+})
+
+app.get('/',function(req,res){
+    res.send("welcome to my hotel.. How i can help you ?");
+})
+
+app.listen(4000,()=>{
+    console.log('Listening on port 4000');
+})
+]
+}
+
+INS and OVER mode of writing in vs code
+
+
+{
+Code : 
+  To make connection we need : 
+  1->First we need to make a db.js to perform connection stuffs  :
+  db.js{
+      const mongoose = require('mongoose');
+
+      //define the mongoDB connection URL
+      const mongoURI = 'mongodb://localhost:27017/hotels';
+
+      // Connect to MongoDB
+      mongoose.connect(mongoURI)
+        .then(() => {
+            console.log('Connected to MongoDB');
+        })
+        .catch((err) => {
+            console.error('Error connecting to MongoDB:', err);
+        });
+
+        const db = mongoose.connection;
+
+        // Event listeners for MongoDB connection
+        db.on('connected', () => {
+            console.log('Mongoose connected to MongoDB');
+        });
+        
+        db.on('error', (err) => {
+            console.error('Mongoose connection error:', err);
+        });
+        
+        db.on('disconnected', () => {
+            console.log('Mongoose disconnected. Attempting to reconnect...');
+            mongoose.connect(mongoURI).catch((err) => console.error('Reconnection failed:', err));
+      });
+        
+      //Export the database connection   
+      module.exports = db;
+  }
+  then we need models of taking inputs from user:-
+  {
+    const mongoose = require('mongoose');
+    //Define the person Schema/so that what you want from user in what schema so that input on point to point
+    const personSchema = new mongoose.Schema({
+        name: {
+            type : String,
+            required : true
+        },
+        age:{
+            type: Number 
+        },
+        work:{
+            type:String,
+            enum:['chef','waiter','manager'],
+            required:true
+        },
+        mobile:{
+            type:String,
+            required:true
+        },
+        email:{
+            type: String,
+            require: true,
+            unique: true
+        },
+        address:{
+            type:String
+        },
+        salary:{
+            type:Number,
+            required:true
+        }
+    });
+    //Create Person Model
+    const Person = mongoose.model('Person',personSchema);
+    module.exports = Person;
+  }
+then we handle all operations in server.js like this : 
+  {
+    const express = require('express');
+    const app = express();//app as functionality of express
+    const db =require('./db');
+    const Person = require('./models/Person');
+    const MenuItem = require('./models/MenuItems');
+    const bodyParser = require('body-parser');
+    app.use(bodyParser.json());//req.body me store kr lega
+
+    //POST route to add a person
+    app.post('/person',async (req,res)=>{
+      try {
+        const data = req.body;//asssuming the request body contains the person data
+        //create a new Person document using the Mongoose model
+        const newPerson = new Person(data);
+
+        //save the new Person to the database
+        const response = await newPerson.save();
+        console.log("data saved",response);
+        res.status(200).json(response);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({error : "Internal Server error"});
+      }
+    })
+    //GET method to get the the data from the database: 
+    app.get('/person',async (req,res)=>{
+      try{
+        const data =await Person.find();
+        console.log('Data fetched succesfully');
+        res.status(200).json(data);
+      }catch (error) {
+        console.log(error);
+        res.status(500).json({error : "Internal Server error"});
+      }
+    })
+    app.get('/',function(req,res){
+      res.send("welcome to my hotel.. How i can help you ?");
+    })
+
+    app.listen(4000,()=>{
+      console.log('Listening on port 4000');
+    })
+
+  }//code part..
+//Body Parser is middleware library for express.js bodyParser.json() automatically parses the JSON data from the request body and convert it into a javaScript object, whic is then stored in the req.body
+}
+#Search through parameter in endpoint like workType : 
+{
+   app.get('/person/:workType',async (req,res)=>{
+        try{
+            const workType = req.params.workType;//that Extract the worktype from 'url'
+            if(workType == 'chef'|| workType == 'manager'||workType=='waiter'){
+                const response = await Person.find({work : workType});
+                console.log('Response fetched');
+                res.status(200).json(response);
+            }else{
+                res.status(404).json({error : "Invalid work type!"})
+            }
+        }catch (error) {
+            console.log(error);
+            res.status(500).json({error : "Internal Server error"});
+        }
+    })
+}
+
+But its seems too difficult to manage so we use 'express Router' to manage it : 
+{
+    here we have write the all the get post methods in the server.js that seems very difficult to manage so we use express routes for all that :
+     ->We have a lots of endpoints in a single file server.js
+     ->This makes code readablity bad experience as well as handling 
+     ->So let's create a separate file to manage these pages or endpoints /person and /menu
+     ->Express Router is like traffic cop for your web server
+     ->Express Router helps you organise and manage these pages or endpoints in your web application. It's like creating separate folders for different types of tasks.
+}
+{
+  code:how to use express router:
+  -1>create routes folder in it we will create the separate routes files for separate endpoints...
+  -2>first acquire the express router in the file of endpointes(like personRoutes.js): with code 
+    const express = require('express');
+    const router = express.Router(); 
+  -3>then require schema of Person like that:
+    const Person = require('./../models/Person');
+  -4>then write using syntax : router.get/post()
+  for example :
+    router.get('/',async (req,res)=>{
+      try{
+          const data =await Person.find();
+          console.log('Data fetched succesfully');
+          res.status(200).json(data);
+      }catch (error) {
+          console.log(error);
+          res.status(500).json({error : "Internal Server error"});
+      }
+    })
+  -5>then export it : module.exports =router;
+  -6>then come to server.js import like that:
+    //import the router files:
+      const personRoutes = require('./routes/PersonRoutes');
+
+    //use the routers
+      app.use('/person',personRoutes);
+}
+
+Day*8 : middleware [
+Analogy : middle phase of any work like making food choping is required it act as middleware.
+There are three phase in any request to  response : 
+1)Request Phase : You (the client) make a request to nodeHotel system for menu, submitting a reservation, or anything else.
+2) middleware phase : it is like brhind the scenes process in the kitchen. it's a series of function that your request goes through before it reaches the final destination
+3) final response phase : After passing through the middleware, your request getd processed, and the system send back a response. it could be menu you requested or confirmation of your reservation.
+
+API:
+A weather API that provides current weather data when called with a specific location. 
+
+Middleware:{
+A component within a web application that authenticates user credentials before accessing the weather API. 
+
+In Express.js, the next() function is a callback that signals to Express that the current middleware function has completed its processing and that it's time to move on to the next middleware function or route handler in the chain
+
+=>Its a way to add extra functiionality to your application's request-response cycle, such as "logging", "authentication checks", or "modifying request data" before it reaches it's final destination.
+
+}
+Authentication and Authorization : {
+  1)Verifying Identity(Authentication):
+  2)Access Control(Authorization):Role based access like chef is not allowed to check the 
+}
+Implementation in Node.js:-
+1) Authentication middleware :
+--In your node.js application, you might use middleware like passport to handle the authentication process.
+--Passport hleps verify the identity of the chef based on thier provided credentials.
+
+2)User Roles and Permissions:
+--You'll define roles for staff members(e.g., chef, waiter, manager)
+--Authorization middleware will check the role of the authenticated user and grant access accordingly.
+
+3)Secure endpoints:
+--You'll protect certain routes(like updating menu items) with authentication checks.
+--Authorization middleware will check the role of the authenticated user and grant access accordingly.
+
+Before you can determine what someone is allowed to do(Authorization),You need to know who they are(authentication)
+
+#Passport.js
+Passport.js is a popular authentication middleware for Node.js.
+Think of passport.js as a helpful tool that makes it eaiser for developer to handle user authentication in their Node.js applications.
+
+To use Passport.js in a Node.js application, you need to install the passport package along with the authentication strategies you intend to use.
+
+For this course, we are using local strategies authentication (username and password).
+you would typically install "passport-local"
+"npm install passport passport-local"
+
+server.js {
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+}
+
+//middleware function 
+const logRequest = (req,res,next)=>{
+    console.log(`[${new Date().toLocaleString()}] Request made to : ${req.originalUrl}`);
+    next();//move on to the next phase
+}
+
+app.use(logRequest);
+
+passport.use(new LocalStrategy( async (USERNAME,password,done)=>{
+    //authentication logic here
+    try {
+        console.log('Received credentials : ',USERNAME,password);
+        const user =await Person.findOne({username : USERNAME });
+        if (!user) {
+            return done(null, false, { message: 'Incorrect username.' });
+        }
+        const isPasswordMatch = user.password === password ? true : false;
+        if(isPasswordMatch){
+            return done(null,user);
+        }
+        else{
+            return done(null, false, {message : 'Incorrect Password.'})
+        }
+        
+    } catch (error) {
+        return done(error);
+    }
+}))
+
+app.use(passport.initialize());
+
+app.get('/',passport.authenticate('local',{session:false}),function(req,res){
+    res.send("welcome to my hotel.. How i can help you ?");
+})
+thats how we can use the authenticate user and to get username and passsword we can use the Authentication logic and use in query of link as parameters in postman
+
+the username and password we got from post to the /person.
+]
