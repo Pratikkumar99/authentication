@@ -1,9 +1,7 @@
 const express = require('express');
 const app = express();//app as functionality of express
 const db =require('./db');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const Person = require('./models/Person')
+const passport = require('./auth');
 
 //Body Parser is middleware library for express.js
 //bodyParser.json() automatically parses the JSON
@@ -12,6 +10,7 @@ const Person = require('./models/Person')
 // the req.body
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());//req.body me store kr lega
+const PORT = process.env.PORT || 4000;
 
 //middleware function 
 const logRequest = (req,res,next)=>{
@@ -21,26 +20,6 @@ const logRequest = (req,res,next)=>{
 
 app.use(logRequest);
 
-passport.use(new LocalStrategy( async (USERNAME,password,done)=>{
-    //authentication logic here
-    try {
-        console.log('Received credentials : ',USERNAME,password);
-        const user =await Person.findOne({username : USERNAME });
-        if (!user) {
-            return done(null, false, { message: 'Incorrect username.' });
-        }
-        const isPasswordMatch = user.password === password ? true : false;
-        if(isPasswordMatch){
-            return done(null,user);
-        }
-        else{
-            return done(null, false, {message : 'Incorrect Password.'})
-        }
-        
-    } catch (error) {
-        return done(error);
-    }
-}))
 
 app.use(passport.initialize());
 const authenticationMiddleware = passport.authenticate('local',{session:false});
@@ -57,6 +36,6 @@ const menuRoutes = require('./routes/MenuRoutes');
 app.use('/person',authenticationMiddleware,personRoutes);
 app.use('/menu',authenticationMiddleware,menuRoutes);
 
-app.listen(4000,()=>{
-    console.log('Listening on port 4000');
+app.listen(PORT,()=>{
+    console.log(`Listening on port ${PORT}`);
 })
