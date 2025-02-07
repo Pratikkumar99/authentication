@@ -23,7 +23,7 @@ app.use(logRequest);
 
 app.use(passport.initialize());
 const authenticationMiddleware = passport.authenticate('local',{session:false});
-app.get('/',authenticationMiddleware,function(req,res){
+app.get('/',function(req,res){
     res.send("welcome to my hotel.. How i can help you ?");
 })
 
@@ -34,7 +34,7 @@ const menuRoutes = require('./routes/MenuRoutes');
 
 //use the routers
 app.use('/person',authenticationMiddleware,personRoutes);
-app.use('/menu',authenticationMiddleware,menuRoutes);
+app.use('/menu',menuRoutes);
 
 app.listen(PORT,()=>{
     console.log(`Listening on port ${PORT}`);
