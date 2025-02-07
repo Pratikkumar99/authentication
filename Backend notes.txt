@@ -768,4 +768,33 @@ app.get('/',passport.authenticate('local',{session:false}),function(req,res){
 thats how we can use the authenticate user and to get username and passsword we can use the Authentication logic and use in query of link as parameters in postman
 
 the username and password we got from post to the /person.
+
+Store Plain password {
+  -- Storing plain passsword is not secure practice.
+  -- To enhance security, it's highly recommended to hash and salt password before storing them.
+}
+
+so you can use the "bcrypt" library for password hashing in nodejs application.
+ npm install bcrypt
+
+bcrypt.js : {
+
+      Password Hashing: 
+Password -> Hash function(bcrypt) -> Hashed Password.
+
+      Password Hash Salting
+user Password("abc")->Salt Added("abc123") -> Hashing Algorithm -> Hashed password+salt("fssjskskdhwi2in2i2j2jo2jw")
+
+bcrypt.genSalt(rounds): this function generates a salt using the specified number of "rounds". The rounds parameter indicates the complexity of the hashing Algorithm. The higher th rounds, the most secure the salt, but also it increases the computational cost.
+
+}
+How password(matching pass with saved on) works : -
+steps : 
+1: let password = pratik --store it as to hashed salt "password->dhdjdjkwki2kwwikwidkd."
+2: let say we enter login passsword = "Kumar".
+3: then how it matches : "dhdjdjkwki2kwwikwidk --> extract salt" from it.
+4:then it took the entered password and add with salt and then hashed it and then match with saved one.
+"salt + kumar"--> hash -->akdgadsgdasgjadg
+if(same)=login succesfully;
+if not then failed..
 ]
