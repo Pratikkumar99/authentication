@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Person = require('./../models/Person');
 const { message } = require('prompt');
+const { generateToken } = require('../');
 //GET method to get the the data from the database: 
 router.get('/',async (req,res)=>{
     try{
@@ -31,7 +32,7 @@ router.get('/:workType',async (req,res)=>{
     }
 })
 //POST route to add a person
-router.post('/',async (req,res)=>{
+router.post('/signup',async (req,res)=>{
     try {
         const data = req.body;//asssuming the request body contains the person data
         //create a new Person document using the Mongoose model
@@ -40,7 +41,11 @@ router.post('/',async (req,res)=>{
         //save the new Person to the database
         const response = await newPerson.save();
         console.log("data saved",response);
-        res.status(200).json(response);
+         
+        const token =generateToken(response.username);
+        console.log("Token is : ",token);
+        res.status(200).json({response : response,token : token});
+
     } catch (error) {
         console.log(error);
         res.status(500).json({error : "Internal Server error"});
