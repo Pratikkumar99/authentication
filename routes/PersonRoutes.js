@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Person = require('./../models/Person');
 const { message } = require('prompt');
-const { generateToken } = require('../');
+const { jwtAuthMiddleware,generateToken } = require('../jwt');
 //GET method to get the the data from the database: 
 router.get('/',async (req,res)=>{
     try{
@@ -41,8 +41,12 @@ router.post('/signup',async (req,res)=>{
         //save the new Person to the database
         const response = await newPerson.save();
         console.log("data saved",response);
-         
-        const token =generateToken(response.username);
+        const payload = {
+            id : response.id,//unique id of a person data.. 
+            username: response.username
+        }
+        console.log(JSON.stringify(payload));
+        const token =generateToken(payload);
         console.log("Token is : ",token);
         res.status(200).json({response : response,token : token});
 

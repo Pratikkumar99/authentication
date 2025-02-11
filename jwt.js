@@ -1,4 +1,4 @@
-const jwt = require('jasonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const jwtAuthMiddleware = (req,res,next)=>{
     //Extract the jwt token from the request header we can see in postman
@@ -9,7 +9,7 @@ const jwtAuthMiddleware = (req,res,next)=>{
     }
     try {
         //verify the jwt token
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        const decoded = jwt.verify(token,process.env.JWT_SECRET,{expireIn : 30});
 
         //Attach user information to the request object
         req.user = decoded;//user can be any name you prefer
@@ -24,7 +24,7 @@ const jwtAuthMiddleware = (req,res,next)=>{
 //function to generate JWT token
 const generateToken = (userData)=>{
     //Genarate a new JWT token using user data
-    return jwt.sign(userData,process.env.JWT_SECRET);
+    return jwt.sign(userData,process.env.JWT_SECRET,{expiresIn:30});
 }
 
 module.exports = {jwtAuthMiddleware,generateToken};

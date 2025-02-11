@@ -33,7 +33,7 @@ const menuRoutes = require('./routes/MenuRoutes');
 
 
 //use the routers
-app.use('/person',authenticationMiddleware,personRoutes);
+app.use('/person',personRoutes);
 app.use('/menu',menuRoutes);
 
 app.listen(PORT,()=>{
