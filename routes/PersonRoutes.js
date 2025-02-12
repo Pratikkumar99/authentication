@@ -4,8 +4,9 @@ const router = express.Router();
 const Person = require('./../models/Person');
 const { message } = require('prompt');
 const { jwtAuthMiddleware,generateToken } = require('../jwt');
+const { compare } = require('bcrypt');
 //GET method to get the the data from the database: 
-router.get('/',async (req,res)=>{
+router.get('/',jwtAuthMiddleware,async (req,res)=>{
     try{
         const data =await Person.find();
         console.log('Data fetched succesfully');
@@ -16,21 +17,21 @@ router.get('/',async (req,res)=>{
     }
 })
 
-router.get('/:workType',async (req,res)=>{
-    try{
-        const workType = req.params.workType;//that Extract the worktype from url
-        if(workType == 'chef'|| workType == 'manager'||workType=='waiter'){
-            const response = await Person.find({work : workType});
-            console.log('Response fetched');
-            res.status(200).json(response);
-        }else{
-            res.status(404).json({error : "Invalid work type!"})
-        }
-    }catch (error) {
-        console.log(error);
-        res.status(500).json({error : "Internal Server error"});
-    }
-})
+// router.get('/:workType',async (req,res)=>{
+//     try{
+//         const workType = req.params.workType;//that Extract the worktype from url
+//         if(workType == 'chef'|| workType == 'manager'||workType=='waiter'){
+//             const response = await Person.find({work : workType});
+//             console.log('Response fetched');
+//             res.status(200).json(response);
+//         }else{
+//             res.status(404).json({error : "Invalid work type!"})
+//         }
+//     }catch (error) {
+//         console.log(error);
+//         res.status(500).json({error : "Internal Server error"});
+//     }
+// })
 //POST route to add a person
 router.post('/signup',async (req,res)=>{
     try {
@@ -89,6 +90,50 @@ router.delete('/:id',async(req,res)=>{
 
     } catch (error) {
         console.log(error);
+        res.status(500).json({error : 'Internal server error'});
+    }
+})
+//login route will provide token when we enter username and password....
+router.post('/login',async(req,res)=>{
+    try {
+        //Extract username and password from the request body
+        const {username,password} = req.body;
+
+        //find user from username
+        const user = await Person.findOne({username : username});
+
+        //if user doesnot exist and password donaot match , return error
+        if(!user || !(await user.comparePassword(password))){
+            return res.status(401).json({error : 'Invalid Username or Password'});
+        }
+
+        //generate token 
+        const payload = {
+            id : user.id,
+            username : user.username
+        }
+        const token = generateToken(payload);
+        //return payload as response : 
+        res.json({token});
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error : 'Internal server error'});
+    }
+})
+
+//create an profile route
+router.get('/profile',jwtAuthMiddleware,async(req,res)=>{
+    try {
+        //from the data
+        const userData = req.user;
+        console.log("User Data",userData);
+
+        const userId = userData.id;
+        const user = await Person.findById(userId);
+        res.status(200).json({user});
+    } catch (err) {
+        console.log(err);
         res.status(500).json({error : 'Internal server error'});
     }
 })

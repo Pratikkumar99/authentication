@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 // Ensure DB_URL is set
-const mongoURI = process.env.DB_URL;
+const mongoURI = 'mongodb://localhost:27017/hotels';
 if (!mongoURI) {
     console.error("Error: DB_URL is not defined in environment variables.");
     process.exit(1);
